@@ -18,15 +18,16 @@ class UserController extends Controller
                 'password' =>  'required'
             ]
         );
+        if ($validator->fails())
+            return response()->json(['code' => 400, 'message' => 'Bad Request'], 200);
+
         $user = User::where('email', $request->email)->first();
         if (!isset($user)) {
-            return response()->json(['status_code' => 400, 'message' => 'User not found'], 200);
+            return response()->json(['code' => 400, 'message' => 'User not found'], 200);
         }
-        if ($validator->fails())
-            return response()->json(['status_code' => 400, 'message' => 'Bad Request']);
 
         if (!Hash::check($request->password, $user->password))
-            return response()->json(['message' => 'Do not match our records!!'], 200);
+            return response()->json(['code' => 400,'message' => 'Do not match our records!!'], 200);
 
         $tokenResult = $user->createToken('authToken')->plainTextToken;
         return response()->json(['code' => 200, 'token' => $tokenResult, 'message' => 'good', 'type' => $user->type], 200);

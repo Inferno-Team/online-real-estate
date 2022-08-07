@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('real_estate_room_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('room_id')->references('id')->on('real_estate_rooms');
+            $table->foreignId('room_id')->references('id')->on('real_estate_rooms')->cascadeOnDelete();
             $table->string('img_url')->default('');
             $table->timestamps();
         });

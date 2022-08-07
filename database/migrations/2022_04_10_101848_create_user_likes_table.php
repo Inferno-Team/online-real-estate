@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('user_likes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('estate_id')->references('id')->on('real_estates');
+            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('estate_id')->references('id')->on('real_estates')->cascadeOnDelete();
             $table->timestamps();
         });
     }

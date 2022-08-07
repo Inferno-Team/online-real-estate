@@ -7,14 +7,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/signup', [UserController::class, 'signUp']);
-Route::post('/logout', [UserController::class, 'logout']);
 Route::get('/generate',[RealEstateController::class, 'generateRealEstates']);
 Route::get('/recent_real_estate', [RealEstateController::class, 'recentRealEstate']);
 Route::get('/real_estate_rooms/{id}', [RealEstateController::class, 'realEstateRooms']);
 Route::get('/get_estate_details/{id}', [RealEstateController::class, 'estateDetails']);
 
 Route::group(['middleware' => ['auth:sanctum']], function ($route) {
-
+    Route::post('/logout', [UserController::class, 'logout']);
     $route->post('/add_real_estate', [RealEstateController::class, 'addRealEstate']);
     $route->post('/edit_image', [RealEstateController::class, 'editEstateImage']);
     $route->post('/edit_video360', [RealEstateController::class, 'editVideo360']);

@@ -332,8 +332,7 @@ class RealEstateController extends Controller
                          ) AS distance", [$latitude, $longitude, $latitude])
             ->having("distance", "<", $radius)
             ->orderBy("distance", 'asc')
-            ->offset(0)
-            ->limit(20)
+            
             ->with('owner', 'rooms.images')
             ->get();
         info(count($estates));
@@ -358,7 +357,7 @@ class RealEstateController extends Controller
         }
         if ($priceRange[0] == 0.0 && $priceRange[1] == 0.0) {
             $priceRange[0] = 0;
-            $priceRange[1] = 1000000000;
+            $priceRange[1] = PHP_INT_MAX;
         }
         $estates = RealEstate::where('buy_type', 'like', $buyType)
             ->where('type', 'like', $estateType)
